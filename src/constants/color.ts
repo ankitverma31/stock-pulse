@@ -1,0 +1,5 @@
+export const PRIMARY_COLOR = '#bda268'
+export const SECONDARY_COLOR = '#221c21'
+export const LIGHT_BACKGROUND_COLOR = '#f5f5f5'
+export const DARK_BACKGROUND_COLOR = '#121212'
+export const WHITE = '#ffffff'
