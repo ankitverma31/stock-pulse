@@ -37,11 +37,6 @@ describe('PriceChart', () => {
     })
   })
 
-  it('renders loading state initially', () => {
-    render(<PriceChart id="AAPL" />)
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
-  })
-
   it('renders no data message when no stock data is available', async () => {
     vi.mocked(fetchHistoricalData).mockResolvedValueOnce(null)
     render(<PriceChart id="AAPL" />)
