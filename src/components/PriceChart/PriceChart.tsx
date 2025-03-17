@@ -5,6 +5,9 @@ import { PRIMARY_COLOR } from '../../constants/color'
 import { fetchHistoricalData } from '../../api/fetchHistoricalDataById'
 import { HistoricalDataByCompany, TimeFrame } from '../../types/type'
 import PriceChartLoader from '../Loaders/PriceChartLoader'
+import { TEXT_CONSTANTS } from '../../constants/text'
+
+const { PRICE_CHART } = TEXT_CONSTANTS
 
 const timeFrames: { [key: string]: TimeFrame } = {
   '1D': 'daily',
@@ -33,7 +36,7 @@ const PriceChart = ({ id = 'AAPL' }) => {
   if (!stockData) {
     return (
       <Typography variant="h6" color="error">
-        No stock data available (Search for AAPL or MSFT)
+        {PRICE_CHART.NO_DATA}
       </Typography>
     )
   }
