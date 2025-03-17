@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { fetchCompanyById } from '../../api/fetchCompanyById'
 import { Company } from '../../types/type'
 import { Box, Card, CardContent, Typography, Link } from '@mui/material'
-import CompanyDetailLoader from '../../components/Loaders/CompanyDetailLoader'
 import PriceChart from '../../components/PriceChart/PriceChart'
 import { ERROR_COLOR, SUCCESS_COLOR } from '../../constants/color'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
 import { APP_NAME } from '../../constants/text'
 import InfoGrid from '../../components/shared/InfoGrid/InfoGrid'
+import CompanyDetailLoader from '../../components/Loaders/CompanyDetail'
 
 const transformCompanyData = (company: Company) => [
   { label: 'ID', value: company.id },

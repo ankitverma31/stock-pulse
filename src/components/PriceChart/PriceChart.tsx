@@ -4,8 +4,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { PRIMARY_COLOR } from '../../constants/color'
 import { fetchHistoricalData } from '../../api/fetchHistoricalDataById'
 import { HistoricalDataByCompany, TimeFrame } from '../../types/type'
-import PriceChartLoader from '../Loaders/PriceChartLoader'
 import { TEXT_CONSTANTS } from '../../constants/text'
+import PriceChartLoader from '../Loaders/PriceChart'
 
 const { PRICE_CHART } = TEXT_CONSTANTS
 

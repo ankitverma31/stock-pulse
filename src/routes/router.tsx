@@ -3,7 +3,7 @@ import { ROUTES } from '../constants/route'
 import AppLayout from '../App'
 import Home from '../pages/Home/Home'
 import { lazy, Suspense } from 'react'
-import CompanyDetailLoader from '../components/Loaders/CompanyDetailLoader'
+import CompanyDetailLoader from '../components/Loaders/CompanyDetail'
 
 const CompanyDetail = lazy(() => import('../pages/Company/CompanyDetail'))
 
