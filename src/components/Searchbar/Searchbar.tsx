@@ -1,9 +1,10 @@
-import { Autocomplete, Chip, debounce, TextField } from '@mui/material'
+import { Autocomplete, Box, Chip, debounce, Stack, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { Company } from '../../types/type'
 import { fetchCompanies } from '../../api/fetchCompanies'
 import { memo, useCallback, useState } from 'react'
 import { ROUTES } from '../../constants/route'
+import { ERROR_COLOR, SUCCESS_COLOR } from '../../constants/color'
 
 const Searchbar: React.FC = () => {
   const navigate = useNavigate()
@@ -13,12 +14,11 @@ const Searchbar: React.FC = () => {
 
   const onCompanyClick = useCallback(
     (id: string) => {
-      const company = options?.find((option) => option.id === id)
-      setInputValue(company?.name || inputValue)
+      setInputValue('')
       setOptions([])
       navigate(`${ROUTES.COMPANY_DETAIL}/${id}`)
     },
-    [inputValue, navigate, options],
+    [navigate],
   )
 
   const handleSearch = useCallback(
@@ -43,11 +43,13 @@ const Searchbar: React.FC = () => {
 
   return (
     <Autocomplete
+      blurOnSelect
       size="small"
+      disableClearable
       openOnFocus={false}
       open={loading || options === null || options.length > 0}
-      clearOnBlur={false}
-      sx={{ width: 300, borderRadius: 1 }}
+      clearOnBlur={true}
+      sx={{ width: { xs: '100%', md: 500 }, borderRadius: 1 }}
       noOptionsText="No companies found"
       filterOptions={(x) => x}
       autoComplete
@@ -63,7 +65,22 @@ const Searchbar: React.FC = () => {
       renderInput={(params) => <TextField {...params} placeholder="Search for a company" />}
       renderOption={(props, option) => (
         <li {...props} key={option.id} onClick={() => onCompanyClick(option.id)}>
-          <Chip label={option.id} size="small" sx={{ mr: 1 }} /> {option.name}
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
+            <Stack alignItems="start">
+              <Typography variant="body1" sx={{ mb: 0.5 }}>
+                {option.name}
+              </Typography>
+              <Chip label={option.id} size="small" />
+            </Stack>
+            <Box>
+              <Typography variant="body1" color="text.secondary">
+                ${option.currentPrice}
+              </Typography>
+              <Typography variant="body2" color={option.changePercent >= 0 ? SUCCESS_COLOR : ERROR_COLOR}>
+                {option.changePercent}%
+              </Typography>
+            </Box>
+          </Stack>
         </li>
       )}
     />

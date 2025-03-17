@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import Footer from './components/ui/Footer'
-import Header from './components/ui/Header'
+import Footer from './components/UI/Footer'
+import Header from './components/UI/Header'
 import { Container, Stack } from '@mui/material'
 
 const AppLayout: React.FC = () => {

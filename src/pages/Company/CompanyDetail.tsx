@@ -2,20 +2,44 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { fetchCompanyById } from '../../api/fetchCompanyById'
 import { Company } from '../../types/type'
-import { Box, Card, CardContent, Typography, Link, Grid2 } from '@mui/material'
-import CompanyDetailLoader from '../../components/loaders/CompanyDetailLoader'
+import { Box, Card, CardContent, Typography, Link } from '@mui/material'
+import CompanyDetailLoader from '../../components/Loaders/CompanyDetailLoader'
 import PriceChart from '../../components/PriceChart/PriceChart'
+import { ERROR_COLOR, SUCCESS_COLOR } from '../../constants/color'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
+import { APP_NAME } from '../../constants/text'
+import InfoGrid from '../../components/shared/InfoGrid/InfoGrid'
+
+const transformCompanyData = (company: Company) => [
+  { label: 'ID', value: company.id },
+  { label: 'Name', value: company.name },
+  { label: 'Sector', value: company.sector },
+  { label: 'Industry', value: company.industry },
+  { label: 'Current Price', value: `$${company.currentPrice}` },
+  { label: 'Change', value: company.change },
+  { label: 'Change Percent', value: `${company.changePercent}%` },
+  { label: 'Market Cap', value: `$${company.marketCap}B` },
+  { label: 'Volume', value: company.volume },
+  { label: 'Average Volume', value: company.avgVolume },
+  { label: 'P/E Ratio', value: company.pe },
+  { label: 'EPS', value: `$${company.eps}` },
+  { label: 'Dividend', value: `$${company.dividend}` },
+  { label: 'Dividend Yield', value: `${company.dividendYield}%` },
+  { label: 'Beta', value: company.beta },
+  { label: '52 Week High', value: `$${company.yearHigh}` },
+  { label: '52 Week Low', value: `$${company.yearLow}` },
+]
 
 const CompanyDetail: React.FC = () => {
   const { id } = useParams<{ readonly id: string }>()
   const [company, setCompany] = useState<Company | null>(null)
+  useDocumentTitle({ title: company?.name ? `${company.id} | ${company.name} - ${APP_NAME}` : APP_NAME })
 
   useEffect(() => {
     const fetchCompany = async (id: string) => {
       try {
         const companyData = await fetchCompanyById(id)
         setCompany(companyData)
-        console.log(companyData)
       } catch (error) {
         console.error('Error fetching company data:', error)
       }
@@ -28,10 +52,9 @@ const CompanyDetail: React.FC = () => {
   }, [id])
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box mt={4}>
       {company ? (
         <>
-          {/* Header Section */}
           <Typography variant="h4" gutterBottom>
             {company.name}
           </Typography>
@@ -43,59 +66,14 @@ const CompanyDetail: React.FC = () => {
           </Typography>
           <Typography variant="h5" color="textPrimary" gutterBottom>
             ${company.currentPrice}{' '}
-            <Typography component="span" variant="body1" color={company.changePercent >= 0 ? 'green' : 'red'}>
+            <Typography component="span" variant="body1" color={company.changePercent >= 0 ? SUCCESS_COLOR : ERROR_COLOR}>
               ({company.changePercent}%)
             </Typography>
           </Typography>
 
-          {/* Card Section */}
           <Card sx={{ marginTop: 2, padding: 2 }}>
             <CardContent>
-              <Grid2 container spacing={2}>
-                {/* First Row */}
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Market Cap</Typography>
-                  <Typography variant="body1">${company.marketCap} Cr</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Current Price</Typography>
-                  <Typography variant="body1">${company.currentPrice}</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">High / Low</Typography>
-                  <Typography variant="body1">
-                    ${company.yearHigh} / ${company.yearLow}
-                  </Typography>
-                </Grid2>
-
-                {/* Second Row */}
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Stock P/E</Typography>
-                  <Typography variant="body1">{company.pe}</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Book Value</Typography>
-                  <Typography variant="body1">${company.eps}</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Dividend Yield</Typography>
-                  <Typography variant="body1">{company.dividendYield}%</Typography>
-                </Grid2>
-
-                {/* Third Row */}
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">ROCE</Typography>
-                  <Typography variant="body1">{company.beta}%</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">ROE</Typography>
-                  <Typography variant="body1">{company.dividendYield}%</Typography>
-                </Grid2>
-                <Grid2 size={{ xs: 6, md: 4 }}>
-                  <Typography variant="subtitle1">Face Value</Typography>
-                  <Typography variant="body1">${company.volume}</Typography>
-                </Grid2>
-              </Grid2>
+              <InfoGrid data={transformCompanyData(company)} />
             </CardContent>
           </Card>
         </>

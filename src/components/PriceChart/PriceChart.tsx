@@ -4,7 +4,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { PRIMARY_COLOR } from '../../constants/color'
 import { fetchHistoricalData } from '../../api/fetchHistoricalDataById'
 import { HistoricalDataByCompany, TimeFrame } from '../../types/type'
-import PriceChartLoader from '../loaders/PriceChartLoader'
+import PriceChartLoader from '../Loaders/PriceChartLoader'
 
 const timeFrames: { [key: string]: TimeFrame } = {
   '1D': 'daily',
@@ -33,7 +33,7 @@ const PriceChart = ({ id = 'AAPL' }) => {
   if (!stockData) {
     return (
       <Typography variant="h6" color="error">
-        No stock data available
+        No stock data available (Search for AAPL or MSFT)
       </Typography>
     )
   }
