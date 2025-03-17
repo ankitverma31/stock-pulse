@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   useDocumentTitle({ title: `Home - ${APP_NAME}` })
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <>
       <Box sx={{ display: { xs: 'block', md: 'none' } }}>
         <Searchbar />
       </Box>
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
         </Box>
       </Stack>
       <SectorPerformanceChart />
-    </Box>
+    </>
   )
 }
 

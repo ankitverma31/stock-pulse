@@ -52,7 +52,7 @@ const CompanyDetail: React.FC = () => {
   }, [id])
 
   return (
-    <Box mt={4}>
+    <>
       {company ? (
         <>
           <Typography variant="h4" gutterBottom>
@@ -83,7 +83,7 @@ const CompanyDetail: React.FC = () => {
       <Box sx={{ mt: 2 }}>
         <PriceChart id={id} />
       </Box>
-    </Box>
+    </>
   )
 }
 
